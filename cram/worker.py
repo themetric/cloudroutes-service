@@ -104,7 +104,7 @@ while True:
   # Load health check module and run it
   monitor = __import__("checks." + jdata['ctype'], globals(), locals(), ['check'], -1)
   result = monitor.check(jdata)
-  if result == True:
+  if result:
     # Log it
     stat = "[%s] Healthy Checks" % config['envname']
     stathat.ez_count(config['stathat_ez_key'], stat, 1)
@@ -114,10 +114,6 @@ while True:
                         'method': 'automatic' }
     # Send success to sink
     ztext = json.dumps(jdata)
-  elif result == None:
-    line = "Health check %s was unable to execute" % (jdata['cid'])
-    syslog.syslog(syslog.LOG_ERR, line)
-    ztext = None
   else:
     # Log it
     stat = "[%s] Failed Checks" % config['envname']
@@ -131,9 +127,8 @@ while True:
     ztext = json.dumps(jdata)
 
   # Send data to sink and log it
-  if ztext is not None:
-    zsend.send(ztext)
-    stat = "[%s] Checks sent to sink from workers" % config['envname']
-    stathat.ez_count(config['stathat_ez_key'], stat, 1)
-    line = "Health check %s sent to sink" % jdata['cid']
-    syslog.syslog(syslog.LOG_INFO, line)
+  zsend.send(ztext)
+  stat = "[%s] Checks sent to sink from workers" % config['envname']
+  stathat.ez_count(config['stathat_ez_key'], stat, 1)
+  line = "Health check %s sent to sink" % jdata['cid']
+  syslog.syslog(syslog.LOG_INFO, line)
