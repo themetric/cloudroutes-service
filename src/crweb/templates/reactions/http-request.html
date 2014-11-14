@@ -1,0 +1,128 @@
+{% include 'base-header.html' %}
+
+
+<div class="container">
+  <div class="row">
+  <p></p>
+    <!-- sidebar -->
+    {% include 'sidebar.html' %}
+    <!-- content -->
+    <div class="col-md-8">
+      <div class="page-header">
+      {% if data['edit'] %}
+        <h1><i class="fa fa-cogs fa-1x"></i> Manage Reaction</h1>
+      {% else %}
+        <h1><i class="fa fa-cogs fa-1x"></i> Add Reaction</h1>
+      {% endif %}
+      </div>
+      {% if data['error'] %}
+      <p class="alert alert-danger">{{ data['msg'] }}</p>
+      {% elif data['msg'] and data['error'] == False %}
+      <p class="alert alert-success">{{ data['msg'] }}</p>
+      {% endif %}
+      {% if form.errors %}
+      {% for field, error in form.errors.items() %}
+      {% for msg in error %}
+      <p class="alert alert-danger">{{msg}}</p>
+      {% endfor %}
+      {% endfor %}
+      {% endif %}
+
+
+        <div class="panel panel-primary">
+          <div class="panel-heading">
+          <div class="panel-title">
+              HTTP(S) GET/POST Request
+          </div>
+          </div>
+          <div class="panel-body">
+            <form action="{{ data['url'] }}" method="post" name="http-request" target="_self" class="form-horizontal" role="form">
+            {{ form.csrf_token }}
+
+            {% include 'reactions/base.html' %}
+
+            <!-- request url -->
+            <div class="form-group">
+              <label for="URL" class="col-sm-4 control-label">URL</label>
+              <div class="col-sm-8">
+                <div class="input-group">
+                <span class="input-group-btn">
+                  <button type="button" id="http-request-url" class="btn btn-default" rel="popover" data-content="Enter the URL that you would like the HTTP(S) request to go to." title="URL"><i class="fa fa-question"></i></button>
+                </span>
+                {% if data['edit'] %}
+                {{ form.url(class_="form-control", value=data['reaction']['data']['url']) }}
+                {% else %}
+                {{ form.url(class_="form-control", placeholder="HTTP(S) URL") }}
+                {% endif %}
+                </div>
+              </div>
+            </div>
+            <!-- end request url -->
+
+            <!-- http request type -->
+            <div class="form-group">
+              <label for="HTTP Request Type" class="col-sm-4 control-label">HTTP(S) Request Type</label>
+              <div class="col-sm-8">
+                <div class="input-group">
+                <span class="input-group-btn">
+                  <button type="button" id="http-request-type" class="btn btn-default" rel="popover" data-content="Select the request type" title="HTTP(S) Request Type"><i class="fa fa-question"></i></button>
+                </span>
+                {% if data['edit'] %}
+                {{ form.request_type(class_="form-control", value=data['reaction']['data']['request_type']) }}
+                {% else %}
+                {{ form.request_type(class_="form-control", placeholder="HTTP(S) Request Type") }}
+                {% endif %}
+              </div>
+              </div>
+            </div>
+            <!-- end http request type -->
+
+             <!-- http post body -->
+            <div class="form-group" style="display:none;" id="post-body">
+              <label for="HTTP(S) POST Body" class="col-sm-4 control-label">HTTP(S) POST Body</label>
+              <div class="col-sm-8">
+                <div class="input-group">
+                <span class="input-group-btn">
+                  <button type="button" id="http-post-body" class="btn btn-default" rel="popover" data-content="Set the body of your HTTP POST request" title="HTTP(S) POST Body"><i class="fa fa-question"></i></button>
+                </span>
+                {% if data['edit'] %}
+                {{ form.post_body(class_="form-control", value=data['reaction']['data']['post_body']) }}
+                {% else %}
+                {{ form.post_body(class_="form-control", placeholder="HTTP POST Body") }}
+                {% endif %}
+              </div>
+              </div>
+            </div>
+            <!-- end http post body -->
+
+            <!-- http request headers -->
+            <div class="form-group">
+              <label for="HTTP(S) Headers" class="col-sm-4 control-label">HTTP(S) Headers</label>
+              <div class="col-sm-8">
+                <div class="input-group">
+                <span class="input-group-btn">
+                  <button type="button" id="http-headers" class="btn btn-default" rel="popover" data-content="Set the headers of your HTTP(S) request" title="HTTP(S) Headers"><i class="fa fa-question"></i></button>
+                </span>
+                {% if data['edit'] %}
+                {{ form.request_headers(class_="form-control", value=data['reaction']['data']['request_headers']) }}
+                {% else %}
+                {{ form.request_headers(class_="form-control", placeholder="HTTP Headers") }}
+                {% endif %}
+              </div>
+              </div>
+            </div>
+            <!-- end http request headers -->
+
+                <p></p>
+                <button type="submit" class="btn btn-primary btn-block">Submit</button>
+            </form>
+          </div>
+        </div>
+      <div class="panel-group" id="accordion">
+        {% include 'reactions/docs/http-request-details.html' %}
+      </div>
+    </div>
+  </div> <!-- row -->
+</div> <!-- container -->
+
+{% include 'dash-footer.html' %}
