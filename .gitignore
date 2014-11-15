@@ -60,3 +60,5 @@ target/
 
 # Private config files
 config.yml
+main.yml
+control.yml

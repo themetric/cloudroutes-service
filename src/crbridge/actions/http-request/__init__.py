@@ -54,7 +54,7 @@ def make_request(jdata, redata, rdb, r_server):
         try:
             result = requests.post(
                 url, timeout=timeout, headers=headers, data=body, verify=False)
-        except
+        except:
             return False
     else:
         try:
