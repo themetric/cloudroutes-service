@@ -78,7 +78,7 @@
             <!-- end http request type -->
 
              <!-- http post body -->
-            <div class="form-group" style="{% if data['reaction']['data']['request_type'] != 'post' %}display:none;{% endif %}" id="post-body">
+            <div class="form-group" style="{% if not data['reaction'] or (data['reaction'] and data['reaction']['data']['request_type'] != 'post') %}display:none;{% endif %}" id="post-body">
               <label for="HTTP(S) POST Body" class="col-sm-4 control-label">HTTP(S) POST Body</label>
               <div class="col-sm-8">
                 <div class="input-group">

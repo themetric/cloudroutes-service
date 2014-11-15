@@ -7,7 +7,7 @@
   <div id="email-Collapse" class="panel-collapse collapse in">
   <div class="panel-body">
     <h3>Overview</h3>
-    <p>Makes an HTTP(S) request via GET or POST.
+    <p>Makes an HTTP(S) request via GET or POST with specified headers and POST body.
 
     <p></p>
     <h3>Reaction Actions</h3>
@@ -17,13 +17,20 @@
     <h3>Reaction Form Details</h3>
 
     <h4>URL</h4>
-    <p>This is the URL you would like tht HTTP(S) request to be sent to.</p>
+    <p>This is the URL you would like the HTTP(S) request to be sent to.  Be sure to specify what protocall (HTTP or HTTPS) you would like to be used to send the request.</p>
 
     <h4>HTTP(S) Request Type</h4>
-    <p>This is the type of HTTP(S) request you would like to use.  GET requests will fetch some information from the URL while POST requests will post some the data from the HTTP body to the remote URL.</p>
+    <p>This is the type of HTTP(S) request you would like to use.  GET requests will fetch some information from the specified URL.  POST requests will post some data from the request body to the specified URL.</p>
+
+    <h4>HTTP(S) POST Body</h4>
+    <p>This is the body or data that you would like to send to the specified URL during a POST request.  A POST body can contain data formatted in many different ways, but the most common would be encoded form data or JSON data.  Be sure to specify the data type through the Content-Type HTTP header.</p>
+
+    <h4>HTTP(S) Headers</h4>
+    <p>These are the headers that you would like to be sent along with your POST or GET request.
+    </p>
 
     <h4>Continuous</h4>
-    <p>If set to Yes, the Continuous option will tell this reaction to post the request continously.
+    <p>If set to Yes, the Continuous option will tell this reaction to send the HTTP(S) request continously.
     <p></p>
 
   </div>
